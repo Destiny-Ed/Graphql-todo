@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:joovlin/Provider/Mutations/add_todo_provider.dart';
+import 'package:joovlin/Provider/Query/get_todo_provider.dart';
 import 'package:joovlin/Screen/home_page.dart';
 import 'package:joovlin/Styles/color.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +20,7 @@ class App extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AddTaskProvider()),
+        ChangeNotifierProvider(create: (context) => GetTaskProvider()),
       ],
       child: MaterialApp(
         theme: ThemeData(

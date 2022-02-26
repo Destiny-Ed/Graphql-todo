@@ -19,10 +19,7 @@ class AddTaskProvider extends ChangeNotifier {
   ///To get graphql client
 
   ///Add task method
-  void addTask(
-      {String? title,
-      String? description,
-      BuildContext? ctx}) async {
+  void addTask({String? title, String? description, BuildContext? ctx}) async {
     _status = true;
     notifyListeners();
 
@@ -37,7 +34,6 @@ class AddTaskProvider extends ChangeNotifier {
     );
 
     if (result.hasException) {
-      print(result.exception);
       _status = false;
       if (result.exception!.graphqlErrors.isEmpty) {
         _response = "Internet is not found";
@@ -46,12 +42,11 @@ class AddTaskProvider extends ChangeNotifier {
       }
       notifyListeners();
     } else {
-      print(result.data);
       _status = false;
       _response = "Task was successfully added";
       notifyListeners();
 
-      Navigator.of(ctx!).pop('added');
+      Navigator.of(ctx!).pop('');
     }
   }
 
