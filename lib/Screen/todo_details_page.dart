@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:joovlin/Screen/Resuable_Widgets/button.dart';
-import 'package:joovlin/Screen/Resuable_Widgets/text_field.dart';
+import 'package:joovlin/Provider/Mutations/update_todo_provider.dart';
+import 'package:joovlin/Screen/ReuseableWidget/button.dart';
+import 'package:joovlin/Screen/ReuseableWidget/text_field.dart';
 import 'package:joovlin/Styles/color.dart';
+import 'package:joovlin/Utils/snack_bar.dart';
+import 'package:provider/provider.dart';
 
 class TaskDetailsPage extends StatefulWidget {
-  const TaskDetailsPage({Key? key, this.title, this.description, this.taskId})
+  const TaskDetailsPage({Key? key, this.title, this.isCompleted, this.description, this.taskId})
       : super(key: key);
 
   final String? title;
   final String? description;
   final String? taskId;
+  final bool? isCompleted;
 
   @override
   _TaskDetailsPageState createState() => _TaskDetailsPageState();
@@ -93,18 +97,36 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                       hint: 'Describe your task?',
                       maxLines: 4),
 
-                  customButton(
-                    tap: () {
-                      print(_description.text);
-                      print(_title.text);
-                      
-                    },
-                    isValid: _isTitleComplete == true &&
-                            _isDescriptionComplete == true
-                        ? true
-                        : false,
-                    context: context,
-                  )
+                  Consumer<UpdateTaskProvider>(
+                      builder: (context, updateTask, child) {
+                    WidgetsBinding.instance!.addPostFrameCallback((_) {
+                      if (updateTask.getResponse != '') {
+                        showMessage(
+                            message: updateTask.getResponse, context: context);
+
+                        ///Clear the response message to avoid duplicate
+                        ///snack bar
+                        updateTask.clear();
+                      }
+                    });
+                    return customButton(
+                      status: updateTask.getStatus,
+                      tap: () {
+                        ///Save Task to database
+                        updateTask.updateTask(
+                            id: widget.taskId,
+                            isCompleted: widget.isCompleted,
+                            ctx: context,
+                            title: _title.text.trim(),
+                            description: _description.text.trim());
+                      },
+                      isValid: _isTitleComplete == true &&
+                              _isDescriptionComplete == true
+                          ? true
+                          : false,
+                      context: context,
+                    );
+                  })
                 ],
               ),
             ),

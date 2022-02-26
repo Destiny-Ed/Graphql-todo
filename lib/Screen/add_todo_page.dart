@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:joovlin/Provider/Mutations/add_todo_provider.dart';
-import 'package:joovlin/Screen/Resuable_Widgets/button.dart';
-import 'package:joovlin/Screen/Resuable_Widgets/text_field.dart';
+import 'package:joovlin/Screen/ReuseableWidget/button.dart';
+import 'package:joovlin/Screen/ReuseableWidget/text_field.dart';
 import 'package:joovlin/Utils/snack_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -73,8 +73,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                         showMessage(
                             message: addTask.getResponse, context: context);
 
-                        ///Clear the response message to avoid duplicate
-                        ///snack bar
+                            ///Clear the response message to avoid duplicate
                         addTask.clear();
                       }
                     });

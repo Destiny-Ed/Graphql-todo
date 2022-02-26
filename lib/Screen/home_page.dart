@@ -33,50 +33,53 @@ class _HomePageState extends State<HomePage> {
 
           Future.delayed(const Duration(seconds: 3), () => isFetched = true);
         }
-        return RefreshIndicator(
-          onRefresh: () {
-            return Future.delayed(const Duration(seconds: 3));
-          },
-          color: primaryColor,
-          child: getTask.getResponseData().isEmpty
-              ? Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        'Todo List is empty',
-                        style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold),
+        return getTask.getResponseData().isEmpty
+            ? Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Todo List is empty',
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 15),
+                    GestureDetector(
+                      onTap: () {
+                        PageNavigator(ctx: context)
+                            .nextPage(page: const CreateTaskPage())
+                            .then((value) {
+                          if (value == '') {
+                            isFetched = false;
+                            setState(() {});
+                          }
+                        });
+                      },
+                      child: Text(
+                        'Create a task',
+                        style: TextStyle(fontSize: 18, color: grey),
                       ),
-                      const SizedBox(height: 15),
-                      GestureDetector(
-                        onTap: () {
-                          PageNavigator(ctx: context)
-                              .nextPage(page: const CreateTaskPage())
-                              .then((value) {
-                            if (value == '') {
-                              setState(() {});
-                            }
-                          });
-                        },
-                        child: Text(
-                          'Create a task',
-                          style: TextStyle(fontSize: 18, color: grey),
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              : CustomScrollView(
-                  slivers: [
-                    SliverToBoxAdapter(
-                      child: Container(
-                        height: MediaQuery.of(context).size.height,
-                        padding: const EdgeInsets.all(20),
-                        child: Column(
-                          children: [
-                            Expanded(
-                                child: ListView(
+                    ),
+                  ],
+                ),
+              )
+            : CustomScrollView(
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: Container(
+                      height: MediaQuery.of(context).size.height,
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        children: [
+                          Expanded(
+                              child: RefreshIndicator(
+                            onRefresh: () {
+                              getTask.getTask(true);
+
+                              return Future.delayed(const Duration(seconds: 3));
+                            },
+                            color: primaryColor,
+                            child: ListView(
                               children: List.generate(
                                   getTask.getResponseData().length, (index) {
                                 Map data = getTask.getResponseData()[index];
@@ -95,11 +98,14 @@ class _HomePageState extends State<HomePage> {
                                         .nextPage(
                                             page: TaskDetailsPage(
                                       taskId: taskId,
+                                      isCompleted: isCompleted,
                                       title: title,
                                       description: description,
                                     ))
                                         .then((value) {
                                       if (value == '') {
+                                        isFetched = false;
+
                                         setState(() {});
                                       }
                                     });
@@ -153,15 +159,15 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 );
                               }),
-                            )),
-                            const SizedBox(height: 150),
-                          ],
-                        ),
+                            ),
+                          )),
+                          const SizedBox(height: 150),
+                        ],
                       ),
-                    )
-                  ],
-                ),
-        );
+                    ),
+                  )
+                ],
+              );
       }),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -169,7 +175,7 @@ class _HomePageState extends State<HomePage> {
               .nextPage(page: const CreateTaskPage())
               .then((value) {
             if (value == '') {
-              print("dkkfdfdf");
+              isFetched = false;
               setState(() {});
             }
           });
