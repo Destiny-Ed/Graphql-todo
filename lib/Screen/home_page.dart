@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:joovlin/Screen/add_todo_page.dart';
+import 'package:joovlin/Screen/todo_details_page.dart';
 import 'package:joovlin/Styles/color.dart';
 import 'package:joovlin/Utils/router.dart';
 
@@ -66,6 +67,14 @@ class _HomePageState extends State<HomePage> {
                                       .toUpperCase()
                                   : "${index + 1}";
                               return ListTile(
+                                onTap: () {
+                                  PageNavigator(ctx: context).nextPage(
+                                      page: TaskDetailsPage(
+                                    taskId: index.toString(),
+                                    title: 'Meeting with john',
+                                    description: 'Hello world',
+                                  ));
+                                },
                                 contentPadding: const EdgeInsets.all(0),
                                 title: Text(
                                   "Meeting with john",

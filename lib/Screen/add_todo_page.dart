@@ -17,6 +17,14 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
   ///Validation Variables for textfield
   bool _isTitleComplete = false;
   bool _isDescriptionComplete = false;
+
+  @override
+  void dispose() {
+    _title.clear();
+    _description.clear();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

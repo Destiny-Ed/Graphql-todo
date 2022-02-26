@@ -3,20 +3,40 @@ import 'package:joovlin/Screen/Resuable_Widgets/button.dart';
 import 'package:joovlin/Screen/Resuable_Widgets/text_field.dart';
 import 'package:joovlin/Styles/color.dart';
 
-class CreateTaskPage extends StatefulWidget {
-  const CreateTaskPage({Key? key}) : super(key: key);
+class TaskDetailsPage extends StatefulWidget {
+  const TaskDetailsPage({Key? key, this.title, this.description, this.taskId})
+      : super(key: key);
+
+  final String? title;
+  final String? description;
+  final String? taskId;
 
   @override
-  _CreateTaskPageState createState() => _CreateTaskPageState();
+  _TaskDetailsPageState createState() => _TaskDetailsPageState();
 }
 
-class _CreateTaskPageState extends State<CreateTaskPage> {
+class _TaskDetailsPageState extends State<TaskDetailsPage> {
   final TextEditingController _title = TextEditingController();
   final TextEditingController _description = TextEditingController();
 
   ///Validation Variables for textfield
   bool _isTitleComplete = false;
   bool _isDescriptionComplete = false;
+
+  @override
+  void dispose() {
+    _title.clear();
+    _description.clear();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    populateFields();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +44,9 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
         title: const Text('Task details'),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              print("Delete");
+            },
             icon: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Icon(
@@ -90,5 +112,11 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
         ],
       ),
     );
+  }
+
+  void populateFields() {
+    _title.text = widget.title!;
+    _description.text = widget.description!;
+    setState(() {});
   }
 }
