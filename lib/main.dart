@@ -13,24 +13,21 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        fontFamily: 'Helvetica',
-        appBarTheme: AppBarTheme(
-          color: primaryColor,
-        ),
-        primaryColor: primaryColor,
-        checkboxTheme: CheckboxThemeData(
-          checkColor: MaterialStateProperty.resolveWith(
-            (states) {
-              return green;
-            },
+          fontFamily: 'Helvetica',
+          appBarTheme: AppBarTheme(
+            color: primaryColor,
           ),
-          fillColor: MaterialStateProperty.resolveWith(
-            (states) {
-              return grey;
-            },
+          primaryColor: primaryColor,
+          floatingActionButtonTheme: FloatingActionButtonThemeData(
+            backgroundColor: primaryColor,
           ),
-        ),
-      ),
+          checkboxTheme: CheckboxThemeData(
+            checkColor: MaterialStateProperty.resolveWith(
+              (states) {
+                return white;
+              },
+            ),
+          )),
       home: const HomePage(),
     );
   }
