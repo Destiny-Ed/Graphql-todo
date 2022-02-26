@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:joovlin/Provider/Mutations/delete_todo_provider.dart';
 import 'package:joovlin/Provider/Mutations/update_todo_provider.dart';
 import 'package:joovlin/Screen/ReuseableWidget/button.dart';
 import 'package:joovlin/Screen/ReuseableWidget/text_field.dart';
@@ -7,7 +8,8 @@ import 'package:joovlin/Utils/snack_bar.dart';
 import 'package:provider/provider.dart';
 
 class TaskDetailsPage extends StatefulWidget {
-  const TaskDetailsPage({Key? key, this.title, this.isCompleted, this.description, this.taskId})
+  const TaskDetailsPage(
+      {Key? key, this.title, this.isCompleted, this.description, this.taskId})
       : super(key: key);
 
   final String? title;
@@ -47,18 +49,30 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
       appBar: AppBar(
         title: const Text('Task details'),
         actions: [
-          IconButton(
-            onPressed: () {
-              print("Delete");
-            },
-            icon: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Icon(
-                Icons.delete,
-                color: white,
+          Consumer<DeleteTaskProvider>(builder: (context, deleteTask, child) {
+            WidgetsBinding.instance!.addPostFrameCallback((_) {
+              if (deleteTask.getResponse != '') {
+                showMessage(message: deleteTask.getResponse, context: context);
+
+                ///Clear the response message to avoid duplicate
+                deleteTask.clear();
+              }
+            });
+            return IconButton(
+              onPressed: deleteTask.getStatus == true
+                  ? null
+                  : () {
+                      deleteTask.deleteTask(id: widget.taskId, ctx: context);
+                    },
+              icon: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(
+                  Icons.delete,
+                  color: deleteTask.getStatus == true ? grey : white,
+                ),
               ),
-            ),
-          )
+            );
+          })
         ],
       ),
       body: CustomScrollView(

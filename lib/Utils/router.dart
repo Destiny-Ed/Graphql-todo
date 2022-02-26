@@ -10,4 +10,9 @@ class PageNavigator {
     return Navigator.push(
         ctx!, CupertinoPageRoute(builder: ((context) => page!)));
   }
+
+  void nextPageOnly({Widget? page}) {
+    Navigator.pushAndRemoveUntil(
+        ctx!, MaterialPageRoute(builder: (context) => page!), (route) => false);
+  }
 }

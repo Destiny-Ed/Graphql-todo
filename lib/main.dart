@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:joovlin/Provider/Mutations/add_todo_provider.dart';
+import 'package:joovlin/Provider/Mutations/delete_todo_provider.dart';
 import 'package:joovlin/Provider/Mutations/update_todo_provider.dart';
 import 'package:joovlin/Provider/Query/get_todo_provider.dart';
 import 'package:joovlin/Screen/home_page.dart';
@@ -23,6 +24,7 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => AddTaskProvider()),
         ChangeNotifierProvider(create: (context) => GetTaskProvider()),
         ChangeNotifierProvider(create: (context) => UpdateTaskProvider()),
+        ChangeNotifierProvider(create: (context) => DeleteTaskProvider()),
       ],
       child: MaterialApp(
         theme: ThemeData(
@@ -40,6 +42,7 @@ class App extends StatelessWidget {
                   return white;
                 },
               ),
+              
             )),
         home: const HomePage(),
       ),

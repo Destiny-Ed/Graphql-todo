@@ -17,7 +17,7 @@ class GetTaskProvider extends ChangeNotifier {
 
   final EndPoint _point = EndPoint();
 
-  ///Add task method
+  ///GEt task method
   void getTask(bool isLocal) async {
     ValueNotifier<GraphQLClient> _client = _point.getClient();
 

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:joovlin/GrapqhqlSchema/todo_schema.dart';
 import 'package:joovlin/Provider/client_provider.dart';
+import 'package:joovlin/Screen/home_page.dart';
+import 'package:joovlin/Utils/router.dart';
 import 'package:joovlin/Utils/url.dart';
 
 class UpdateTaskProvider extends ChangeNotifier {
@@ -18,7 +20,7 @@ class UpdateTaskProvider extends ChangeNotifier {
 
   ///To get graphql client
 
-  ///Add task method
+  ///Update task method
   void updateTask(
       {String? id,
       String? title,
@@ -54,7 +56,7 @@ class UpdateTaskProvider extends ChangeNotifier {
       _response = "Task updated";
       notifyListeners();
 
-      Navigator.of(ctx!).pop('');
+      PageNavigator(ctx: ctx).nextPageOnly(page: const HomePage());
     }
   }
 
