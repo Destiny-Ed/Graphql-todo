@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:joovlin/Screen/add_todo_page.dart';
 import 'package:joovlin/Styles/color.dart';
+import 'package:joovlin/Utils/router.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -34,9 +36,15 @@ class _HomePageState extends State<HomePage> {
                           TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 15),
-                    Text(
-                      'Create a task',
-                      style: TextStyle(fontSize: 18, color: grey),
+                    GestureDetector(
+                      onTap: () {
+                        PageNavigator(ctx: context)
+                            .nextPage(page: const CreateTaskPage());
+                      },
+                      child: Text(
+                        'Create a task',
+                        style: TextStyle(fontSize: 18, color: grey),
+                      ),
                     ),
                   ],
                 ),
@@ -112,7 +120,9 @@ class _HomePageState extends State<HomePage> {
               ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          PageNavigator(ctx: context).nextPage(page: const CreateTaskPage());
+        },
         child: const Icon(Icons.add),
       ),
     );
