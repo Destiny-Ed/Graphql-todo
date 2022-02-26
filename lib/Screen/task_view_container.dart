@@ -43,8 +43,7 @@ class _TaskFieldState extends State<TaskField> {
             .then((value) {
           if (value == '') {
             ///Fetch latest data
-            Provider.of<GetTaskProvider>(context, listen: false)
-                  .getTask(false);
+            Provider.of<GetTaskProvider>(context, listen: false).getTask(false);
           }
         });
       },
@@ -95,7 +94,7 @@ class _TaskFieldState extends State<TaskField> {
         value: widget.isCompleted,
         fillColor: MaterialStateProperty.resolveWith(
           (states) {
-            return widget.isCompleted == true ? green : grey;
+            return widget.isCompleted == true ? green : grey.withOpacity(0.20);
           },
         ),
       ),

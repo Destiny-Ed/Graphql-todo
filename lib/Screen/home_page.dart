@@ -3,7 +3,6 @@ import 'package:joovlin/Provider/Mutations/update_todo_provider.dart';
 import 'package:joovlin/Provider/Query/get_todo_provider.dart';
 import 'package:joovlin/Screen/add_todo_page.dart';
 import 'package:joovlin/Screen/task_view_container.dart';
-import 'package:joovlin/Screen/todo_details_page.dart';
 import 'package:joovlin/Styles/color.dart';
 import 'package:joovlin/Utils/router.dart';
 import 'package:provider/provider.dart';
@@ -148,6 +147,7 @@ class _HomePageState extends State<HomePage> {
               );
       }),
       floatingActionButton: FloatingActionButton(
+        mini: true,
         onPressed: () {
           PageNavigator(ctx: context)
               .nextPage(page: const CreateTaskPage())
@@ -164,5 +164,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
-

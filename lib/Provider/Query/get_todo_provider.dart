@@ -27,7 +27,6 @@ class GetTaskProvider extends ChangeNotifier {
         fetchPolicy: isLocal == true ? null : FetchPolicy.networkOnly));
 
     if (result.hasException) {
-      print(result.exception);
       _status = false;
       if (result.exception!.graphqlErrors.isEmpty) {
         _response = "Internet is not found";
@@ -36,7 +35,6 @@ class GetTaskProvider extends ChangeNotifier {
       }
       notifyListeners();
     } else {
-      // print(result.data);
       _status = false;
       _list = result.data;
       notifyListeners();
