@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:joovlin/Styles/color.dart';
 
 Widget customButton(
-    {String? value,
+    {
     VoidCallback? tap,
     bool? status = false,
     bool? isValid = false,

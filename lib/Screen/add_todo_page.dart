@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:joovlin/Provider/Mutations/add_todo_provider.dart';
 import 'package:joovlin/Screen/Resuable_Widgets/button.dart';
 import 'package:joovlin/Screen/Resuable_Widgets/text_field.dart';
 import 'package:joovlin/Styles/color.dart';
+import 'package:joovlin/Utils/snack_bar.dart';
+import 'package:provider/provider.dart';
 
 class CreateTaskPage extends StatefulWidget {
   const CreateTaskPage({Key? key}) : super(key: key);
@@ -65,18 +68,29 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                       hint: 'Describe your task?',
                       maxLines: 4),
 
-                  customButton(
-                    value: 'Save',
-                    tap: () {
-                      print(_description.text);
-                      print(_title.text);
-                    },
-                    isValid: _isTitleComplete == true &&
-                            _isDescriptionComplete == true
-                        ? true
-                        : false,
-                    context: context,
-                  )
+                  Consumer<AddTaskProvider>(builder: (context, addTask, child) {
+                    WidgetsBinding.instance!.addPostFrameCallback((_) {
+                      if (addTask.getResponse != '') {
+                        showMessage(
+                            message: addTask.getResponse, context: context);
+                      }
+                    });
+                    return customButton(
+                      status: addTask.getStatus,
+                      tap: () {
+                        ///Save Task to database
+                        addTask.addTask(
+                            ctx: context,
+                            title: _title.text.trim(),
+                            description: _description.text.trim());
+                      },
+                      isValid: _isTitleComplete == true &&
+                              _isDescriptionComplete == true
+                          ? true
+                          : false,
+                      context: context,
+                    );
+                  })
                 ],
               ),
             ),

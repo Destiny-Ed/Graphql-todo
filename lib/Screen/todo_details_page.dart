@@ -94,10 +94,10 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                       maxLines: 4),
 
                   customButton(
-                    value: 'Save',
                     tap: () {
                       print(_description.text);
                       print(_title.text);
+                      
                     },
                     isValid: _isTitleComplete == true &&
                             _isDescriptionComplete == true

@@ -5,9 +5,9 @@ class PageNavigator {
   PageNavigator({this.ctx});
   BuildContext? ctx;
 
-
   ///Navigator to next page
-  void nextPage({Widget? page}) {
-    Navigator.push(ctx!, CupertinoPageRoute(builder: ((context) => page!)));
+  Future nextPage({Widget? page}) {
+    return Navigator.push(
+        ctx!, CupertinoPageRoute(builder: ((context) => page!)));
   }
 }
