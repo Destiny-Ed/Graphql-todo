@@ -109,4 +109,30 @@ void main() async {
       expect(value.hasException, true);
     });
   });
+
+  group('Query Task', () {
+    test("Fetch Task from db", () async {
+      // final provider = Provider.of<AddTaskProvider>(MockHttpClient());
+
+      QueryResult value = await client!.value.query(
+        QueryOptions(
+          document: gql(TaskSchema.getTaskSchema),
+          variables: {"developer_id": developerId},
+        ),
+      );
+
+      expect(value.hasException, false);
+    });
+
+    test("Check for query exception", () async {
+      QueryResult value = await client!.value.query(
+        QueryOptions(
+          document: gql(TaskSchema.getTaskSchema),
+          variables: {'develope_id' : ''},
+        ),
+      );
+
+      expect(value.hasException, true);
+    });
+  });
 }
