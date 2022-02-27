@@ -5,13 +5,11 @@ import 'package:http/http.dart' as http;
 import 'package:joovlin/GrapqhqlSchema/todo_schema.dart';
 import 'package:joovlin/Provider/client_provider.dart';
 import 'package:joovlin/Utils/url.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 /// Mocks a callback function on which you can use verify
-class MockHttpClient extends Mock implements http.Client, BuildContext {}
+class MockHttpClient extends Mock implements http.Client {}
 
-@GenerateMocks([BuildContext])
 void main() async {
   await initHiveForFlutter();
 
@@ -128,7 +126,7 @@ void main() async {
       QueryResult value = await client!.value.query(
         QueryOptions(
           document: gql(TaskSchema.getTaskSchema),
-          variables: {'develope_id' : ''},
+          variables: {'develope_id': ''},
         ),
       );
 
