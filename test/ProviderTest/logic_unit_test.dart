@@ -53,7 +53,7 @@ void main() async {
 
   ///Test Update Task
   group('Update Task', () {
-    test("Return true if task was updated", () async {
+    test("Confirm Updating of task", () async {
       // final provider = Provider.of<AddTaskProvider>(MockHttpClient());
 
       QueryResult value = await client!.value.mutate(
@@ -79,6 +79,30 @@ void main() async {
           //   "title": "title",
           //   "description": "description"
           // }
+        }),
+      );
+
+      expect(value.hasException, true);
+    });
+  });
+
+  group('Delete Task', () {
+    test("Comfirm if task was deleted successfully", () async {
+      // final provider = Provider.of<AddTaskProvider>(MockHttpClient());
+
+      QueryResult value = await client!.value.mutate(
+        MutationOptions(document: gql(TaskSchema.deleteTaskSchema), variables: {
+          "id": "39db3d54-e178-46c5-b9a0-e528d4c874e3",
+        }),
+      );
+
+      expect(value.hasException, false);
+    });
+
+    test("Check for exception if task was not updated", () async {
+      QueryResult value = await client!.value.mutate(
+        MutationOptions(document: gql(TaskSchema.deleteTaskSchema), variables: {
+          "id": "id",
         }),
       );
 
